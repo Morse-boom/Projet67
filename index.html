@@ -1,235 +1,698 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aide Appelle Professeur - Conditions d'Utilisation</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Appelle Professeur</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #f5f4f0;
+      --surface: #ffffff;
+      --border: #e0ddd6;
+      --text: #1a1916;
+      --muted: #6b6860;
+      --green: #2d7a4f;
+      --green-light: #e8f5ee;
+      --yellow: #b07d1a;
+      --yellow-light: #fdf4dc;
+      --red: #b93232;
+      --red-light: #fde8e8;
+      --accent: #1a1916;
+    }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            color: #333;
-            line-height: 1.6;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-        .container {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-            max-width: 900px;
-            width: 100%;
-            overflow: hidden;
-        }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
 
-        header {
-            background: linear-gradient(135deg, #667eea 10%, #764ba2 100%);
-            color: white;
-            padding: 60px 40px;
-            text-align: center;
-        }
+    /* NAV */
+    nav {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-inner {
+      max-width: 1100px;
+      margin: auto;
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+    }
+    .logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.3rem;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      gap: 0.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      padding: 0.4rem 0.9rem;
+      border-radius: 6px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      background: var(--bg);
+      color: var(--text);
+    }
 
-        header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
+    /* PAGES */
+    .page { display: none; }
+    .page.active { display: block; }
 
-        header p {
-            font-size: 1.1em;
-            opacity: 0.95;
-        }
+    /* HERO */
+    .hero {
+      max-width: 1100px;
+      margin: auto;
+      padding: 5rem 2rem 3rem;
+    }
+    .hero-tag {
+      display: inline-block;
+      background: var(--green-light);
+      color: var(--green);
+      border: 1px solid #b6dfc7;
+      border-radius: 20px;
+      padding: 0.3rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      line-height: 1.15;
+      margin-bottom: 1.2rem;
+      max-width: 700px;
+    }
+    .hero p {
+      color: var(--muted);
+      font-size: 1.1rem;
+      max-width: 580px;
+      margin-bottom: 2.5rem;
+    }
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: var(--text);
+      color: #fff;
+      border: none;
+      padding: 0.75rem 1.6rem;
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-primary:hover { opacity: 0.82; }
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1.5px solid var(--border);
+      padding: 0.75rem 1.6rem;
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-secondary:hover { background: var(--border); }
 
-        main {
-            padding: 60px 40px;
-            max-height: 500px;
-            overflow-y: auto;
-        }
+    /* CARDS COULEURS */
+    .colors-section {
+      max-width: 1100px;
+      margin: 0 auto 4rem;
+      padding: 0 2rem;
+    }
+    .colors-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.2rem;
+    }
+    .color-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.8rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .color-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+    }
+    .color-card.green::before { background: var(--green); }
+    .color-card.yellow::before { background: #d4a01e; }
+    .color-card.red::before { background: var(--red); }
 
-        section {
-            margin-bottom: 40px;
-        }
+    .color-dot {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      margin-bottom: 1rem;
+    }
+    .color-card.green .color-dot { background: var(--green); }
+    .color-card.yellow .color-dot { background: #d4a01e; }
+    .color-card.red .color-dot { background: var(--red); }
 
-        h2 {
-            color: #667eea;
-            font-size: 1.8em;
-            margin-bottom: 15px;
-            border-bottom: 3px solid #667eea;
-            padding-bottom: 10px;
-        }
+    .color-card h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+    }
+    .color-card p { color: var(--muted); font-size: 0.9rem; }
+    .badge {
+      display: inline-block;
+      margin-top: 0.8rem;
+      padding: 0.25rem 0.7rem;
+      border-radius: 5px;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+    .color-card.green .badge { background: var(--green-light); color: var(--green); }
+    .color-card.yellow .badge { background: var(--yellow-light); color: var(--yellow); }
+    .color-card.red .badge { background: var(--red-light); color: var(--red); }
 
-        h3 {
-            color: #764ba2;
-            font-size: 1.3em;
-            margin-top: 25px;
-            margin-bottom: 10px;
-        }
+    /* SECTION TITLE */
+    .section {
+      max-width: 1100px;
+      margin: 0 auto 4rem;
+      padding: 0 2rem;
+    }
+    .section-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+    .section h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+    }
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 3rem 0;
+    }
 
-        p {
-            margin-bottom: 15px;
-            text-align: justify;
-            color: #555;
-        }
+    /* GUIDE STEPS */
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .step {
+      display: flex;
+      gap: 1.2rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.4rem 1.6rem;
+      align-items: flex-start;
+    }
+    .step-num {
+      min-width: 36px; height: 36px;
+      background: var(--text);
+      color: #fff;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 600;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+    .step h4 { font-weight: 600; margin-bottom: 0.3rem; }
+    .step p { color: var(--muted); font-size: 0.9rem; }
 
-        ul, ol {
-            margin-left: 25px;
-            margin-bottom: 15px;
-        }
+    /* FAQ */
+    .faq-list { display: flex; flex-direction: column; gap: 0.6rem; }
+    .faq-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 1.1rem 1.5rem;
+      text-align: left;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+    .faq-question:hover { background: var(--bg); }
+    .faq-icon {
+      font-size: 1.2rem;
+      color: var(--muted);
+      transition: transform 0.2s;
+      flex-shrink: 0;
+    }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-answer {
+      display: none;
+      padding: 0 1.5rem 1.2rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.7;
+      border-top: 1px solid var(--border);
+    }
+    .faq-item.open .faq-answer { display: block; }
 
-        li {
-            margin-bottom: 10px;
-            color: #555;
-        }
+    /* CONDITIONS */
+    .cgu-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem 2.4rem;
+      margin-bottom: 1.2rem;
+    }
+    .cgu-block h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.2rem;
+      margin-bottom: 0.8rem;
+    }
+    .cgu-block p, .cgu-block li {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.75;
+    }
+    .cgu-block ul { padding-left: 1.4rem; }
+    .cgu-block li { margin-bottom: 0.4rem; }
+    .cgu-date {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 2rem;
+    }
 
-        footer {
-            background: #f8f9fa;
-            padding: 30px 40px;
-            border-top: 1px solid #e9ecef;
-            text-align: center;
-            color: #666;
-        }
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+      padding: 2rem;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
 
-        .footer-links {
-            margin-bottom: 15px;
-        }
-
-        .footer-links a {
-            color: #667eea;
-            text-decoration: none;
-            margin: 0 15px;
-            transition: color 0.3s ease;
-        }
-
-        .footer-links a:hover {
-            color: #764ba2;
-            text-decoration: underline;
-        }
-
-        .footer-text {
-            font-size: 0.9em;
-            color: #999;
-        }
-
-        .highlight {
-            background: #f0f4ff;
-            padding: 20px;
-            border-left: 4px solid #667eea;
-            margin: 20px 0;
-            border-radius: 4px;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            header {
-                padding: 40px 25px;
-            }
-
-            header h1 {
-                font-size: 1.8em;
-            }
-
-            main {
-                padding: 40px 25px;
-            }
-
-            h2 {
-                font-size: 1.5em;
-            }
-
-            h3 {
-                font-size: 1.1em;
-            }
-        }
-    </style>
+    @media (max-width: 650px) {
+      .colors-grid { grid-template-columns: 1fr; }
+      .nav-links a { font-size: 0.8rem; padding: 0.35rem 0.6rem; }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>📱 Aide Appelle Professeur</h1>
-            <p>Plateforme de Support Éducatif - STI2D SIN</p>
-        </header>
 
-        <main>
-            <section>
-                <h2>Conditions d'Utilisation</h2>
-                <p>Bienvenue sur la plateforme "Aide Appelle Professeur". En accédant et en utilisant cette plateforme, vous acceptez de respecter les conditions d'utilisation suivantes.</p>
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="#" onclick="showPage('accueil')">Appelle Professeur</a>
+    <ul class="nav-links">
+      <li><a href="#" onclick="showPage('accueil')" id="nav-accueil" class="active">Accueil</a></li>
+      <li><a href="#" onclick="showPage('guide')" id="nav-guide">Guide</a></li>
+      <li><a href="#" onclick="showPage('faq')" id="nav-faq">FAQ</a></li>
+      <li><a href="#" onclick="showPage('cgu')" id="nav-cgu">CGU</a></li>
+    </ul>
+  </div>
+</nav>
 
-                <h3>1. Objet de la Plateforme</h3>
-                <p>Cette plateforme est conçue pour permettre aux étudiants de la classe STI2D SIN de contacter rapidement leur professeur en cas de besoin d'assistance pédagogique. Elle facilite la communication et l'accès au support éducatif.</p>
-
-                <h3>2. Utilisation Responsable</h3>
-                <ul>
-                    <li>L'utilisation de cette plateforme doit être respectueuse et professionnelle</li>
-                    <li>Les messages doivent être pertinents et liés aux cours</li>
-                    <li>Aucun contenu offensant, discriminatoire ou illégal n'est autorisé</li>
-                    <li>L'usurpation d'identité est strictement interdite</li>
-                </ul>
-
-                <h3>3. Confidentialité et Données Personnelles</h3>
-                <p>Vos données personnelles sont traitées de manière sécurisée conformément au RGPD. Nous collectons uniquement les informations nécessaires pour assurer le bon fonctionnement de la plateforme.</p>
-
-                <div class="highlight">
-                    <strong>🔒 Vos données sont protégées</strong><br>
-                    Nous ne partageons vos informations qu'avec les professeurs autorisés pour améliorer votre expérience pédagogique.
-                </div>
-
-                <h3>4. Limitations de Responsabilité</h3>
-                <p>La plateforme est fournie "telle quelle". Nous ne garantissons pas l'absence d'erreurs ou d'interruptions de service. En cas de problème technique, veuillez contacter l'administration.</p>
-
-                <h3>5. Disponibilité du Service</h3>
-                <p>Le service est disponible pendant les heures scolaires et peut être interrompu pour maintenance. Les alertes urgentes doivent être adressées directement au secrétariat.</p>
-
-                <h3>6. Modifications des Conditions</h3>
-                <p>Nous nous réservons le droit de modifier ces conditions à tout moment. Les modifications seront communiquées aux utilisateurs via la plateforme.</p>
-
-                <section style="margin-top: 40px;">
-                    <h2>Politique de Confidentialité</h2>
-                    <p>Nous nous engageons à protéger votre vie privée. Toutes les données collectées sont utilisées uniquement pour améliorer votre expérience utilisateur.</p>
-
-                    <h3>Données Collectées</h3>
-                    <ul>
-                        <li>Identifiant scolaire</li>
-                        <li>Nom et prénom</li>
-                        <li>Classe</li>
-                        <li>Contenu des messages</li>
-                        <li>Timestamps des interactions</li>
-                    </ul>
-                </section>
-
-                <section>
-                    <h2>Support Technique</h2>
-                    <p>Pour toute question ou problème technique, n'hésitez pas à nous contacter :</p>
-                    <ul>
-                        <li><strong>Email :</strong> support@aideprofesseur.edu</li>
-                        <li><strong>Téléphone :</strong> +33 (0) XXX XX XX XX</li>
-                        <li><strong>Bureau :</strong> Salle informatique - Bâtiment A</li>
-                    </ul>
-                </section>
-            </section>
-        </main>
-
-        <footer>
-            <div class="footer-links">
-                <a href="#conditions">Conditions</a>
-                <a href="#confidentialite">Confidentialité</a>
-                <a href="#contact">Contact</a>
-                <a href="#about">À Propos</a>
-            </div>
-            <div class="footer-text">
-                <p>&copy; 2026 Aide Appelle Professeur - STI2D SIN. Tous droits réservés.</p>
-                <p>Plateforme développée pour améliorer l'accès pédagogique</p>
-            </div>
-        </footer>
+<!-- PAGE ACCUEIL -->
+<div class="page active" id="page-accueil">
+  <div class="hero">
+    <span class="hero-tag">Projet scolaire — Terminale</span>
+    <h1>L'assistant de classe intelligent</h1>
+    <p>Grâce à un boîtier physique sur votre table, signalez votre besoin d'aide au professeur en un seul appui — sans déranger la classe.</p>
+    <div class="hero-buttons">
+      <a class="btn-primary" href="#" onclick="showPage('guide')">Voir le guide</a>
+      <a class="btn-secondary" href="#" onclick="showPage('faq')">Questions fréquentes</a>
     </div>
+  </div>
+
+  <div class="colors-section">
+    <div class="section-label">Les 3 boutons</div>
+    <h2 style="font-family:'DM Serif Display',serif;font-size:2rem;margin-bottom:1.5rem;">Comment ça fonctionne ?</h2>
+    <div class="colors-grid">
+      <div class="color-card green">
+        <div class="color-dot"></div>
+        <h3>Bouton Vert</h3>
+        <p>Vous signalez que vous avez une question simple ou que vous avez besoin d'une petite précision. Le professeur en est informé tranquillement.</p>
+        <span class="badge">QCM → Réponse A</span>
+      </div>
+      <div class="color-card yellow">
+        <div class="color-dot"></div>
+        <h3>Bouton Jaune</h3>
+        <p>Vous êtes bloqué et avez besoin d'aide assez rapidement. Le professeur reçoit une alerte prioritaire sur son application.</p>
+        <span class="badge">QCM → Réponse B</span>
+      </div>
+      <div class="color-card red">
+        <div class="color-dot"></div>
+        <h3>Bouton Rouge</h3>
+        <p>Urgence : vous avez besoin du professeur le plus vite possible. L'alerte est immédiate et prioritaire sur toutes les autres.</p>
+        <span class="badge">QCM → Réponse C</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <hr class="divider"/>
+    <div class="section-label">Double usage</div>
+    <h2>Un outil, deux fonctions</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;">
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.6rem;">
+        <div style="font-size:1.6rem;margin-bottom:0.8rem;">🙋</div>
+        <h4 style="font-weight:600;margin-bottom:0.5rem;">Appel d'aide</h4>
+        <p style="color:var(--muted);font-size:0.9rem;">Pendant un exercice, appuyez sur le bouton correspondant à votre niveau d'urgence. Le professeur est notifié sans que vous ayez à lever la main ou déranger vos voisins.</p>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.6rem;">
+        <div style="font-size:1.6rem;margin-bottom:0.8rem;">📋</div>
+        <h4 style="font-weight:600;margin-bottom:0.5rem;">Réponses QCM</h4>
+        <p style="color:var(--muted);font-size:0.9rem;">Lors d'un questionnaire à choix multiples, chaque couleur correspond à une réponse (A, B ou C). Le professeur voit en temps réel les réponses de toute la classe.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE GUIDE -->
+<div class="page" id="page-guide">
+  <div class="hero" style="padding-bottom:1rem;">
+    <span class="hero-tag">Documentation</span>
+    <h1>Guide d'utilisation</h1>
+    <p>Tout ce qu'il faut savoir pour utiliser le système Appelle Professeur en classe, étape par étape.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Mode 1</div>
+    <h2>Demander de l'aide</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div>
+          <h4>Identifiez votre boîtier</h4>
+          <p>Chaque élève dispose d'un boîtier personnel sur sa table. Ne touchez pas au boîtier de votre voisin. Le boîtier est associé à votre place et votre identité dans le système.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div>
+          <h4>Évaluez votre besoin</h4>
+          <p>Avant d'appuyer, réfléchissez à votre niveau d'urgence : avez-vous une simple question (vert), êtes-vous bloqué (jaune), ou avez-vous un problème urgent (rouge) ?</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div>
+          <h4>Appuyez sur le bon bouton</h4>
+          <p><strong style="color:var(--green)">Vert</strong> → question simple &nbsp;|&nbsp; <strong style="color:#b07d1a">Jaune</strong> → aide nécessaire &nbsp;|&nbsp; <strong style="color:var(--red)">Rouge</strong> → urgence. Un seul appui suffit, ne maintenez pas le bouton.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div>
+          <h4>Attendez la notification du professeur</h4>
+          <p>Le professeur reçoit instantanément une alerte sur son application. Il viendra vous voir selon l'ordre de priorité des signaux. Continuez à travailler en attendant.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div>
+          <h4>Annulation (si besoin)</h4>
+          <p>Si votre problème est résolu avant que le professeur arrive, vous pouvez annuler votre demande en appuyant à nouveau sur le même bouton. Le signal disparaît côté professeur.</p>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider"/>
+
+    <div class="section-label">Mode 2</div>
+    <h2>Répondre à un QCM</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div>
+          <h4>Le professeur lance le QCM</h4>
+          <p>Le professeur annonce le début d'un questionnaire et indique le numéro de la question à laquelle vous devez répondre.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div>
+          <h4>Lisez la question et réfléchissez</h4>
+          <p>Prenez le temps de lire la question et les trois propositions de réponse avant d'appuyer. Une fois la réponse envoyée, elle est enregistrée.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div>
+          <h4>Appuyez sur votre réponse</h4>
+          <p><strong style="color:var(--green)">Vert = A</strong> &nbsp;|&nbsp; <strong style="color:#b07d1a">Jaune = B</strong> &nbsp;|&nbsp; <strong style="color:var(--red)">Rouge = C</strong>. Le professeur voit en direct la distribution des réponses dans la classe.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div>
+          <h4>Correction collective</h4>
+          <p>Une fois que tous les élèves ont répondu (ou après un délai), le professeur affiche les résultats et commente la bonne réponse.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE FAQ -->
+<div class="page" id="page-faq">
+  <div class="hero" style="padding-bottom:1rem;">
+    <span class="hero-tag">Aide</span>
+    <h1>Questions fréquentes</h1>
+    <p>Vous avez une question sur le fonctionnement du système ? Trouvez la réponse ici.</p>
+  </div>
+
+  <div class="section">
+    <div class="faq-list">
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Mon boîtier ne répond pas, que faire ?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">Vérifiez d'abord que le boîtier est bien allumé (un voyant devrait être visible). Si aucune lumière n'est présente, signalez-le discrètement au professeur à la main. Ne tentez pas de démonter ou modifier le boîtier.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Puis-je utiliser le boîtier de mon voisin ?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">Non. Chaque boîtier est associé à une place précise dans la classe. Utiliser le boîtier d'un autre élève fausserait les données reçues par le professeur et pourrait entraîner des confusions. Utilisez uniquement votre propre boîtier.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Que se passe-t-il si j'appuie sur le mauvais bouton ?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">Pour l'appel d'aide, vous pouvez ré-appuyer sur le bouton pour annuler la demande, puis appuyer sur le bon. Pour un QCM, la première réponse envoyée est généralement enregistrée. Dans ce cas, signalez l'erreur discrètement au professeur.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Le professeur reçoit-il immédiatement mon signal ?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">Oui, le signal est transmis en temps réel via l'application du professeur. Il reçoit une notification instantanée dès que vous appuyez sur un bouton, avec votre identifiant (place) et la couleur choisie.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Mes réponses QCM sont-elles anonymes ?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">Non. Chaque boîtier est associé à un élève et à sa place. Le professeur peut voir qui a répondu quoi. Cela lui permet de mieux adapter son enseignement et d'identifier les élèves qui ont besoin d'aide sur certaines notions.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Puis-je utiliser le système pour autre chose que l'aide et les QCM ?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">Non. Le système est strictement réservé à ces deux usages définis par le professeur. Toute utilisation abusive (appuis répétés sans raison, jeu, dérangement) est interdite et peut entraîner des sanctions.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Combien de temps dois-je attendre après avoir appuyé ?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">Le temps d'attente dépend du professeur et du niveau de priorité de votre signal. Un bouton rouge est traité en priorité absolue. Un bouton vert peut nécessiter plus d'attente si le professeur est occupé. Continuez à travailler pendant ce temps.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Le système fonctionne-t-il si plusieurs élèves appuient en même temps ?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">Oui. L'application du professeur affiche simultanément tous les signaux actifs, triés par priorité (rouge en premier, puis jaune, puis vert). Le professeur peut ainsi gérer les demandes dans l'ordre le plus efficace.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Que faire si je n'ai plus besoin d'aide avant que le professeur arrive ?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">Appuyez à nouveau sur le même bouton pour annuler votre demande. Cela retire votre signal de la liste du professeur et lui permet de se concentrer sur les autres élèves qui attendent encore.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Le boîtier fonctionne-t-il sans connexion internet ?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">Non. Le système nécessite une connexion réseau (Wi-Fi ou réseau local) pour communiquer avec l'application du professeur. En cas de problème de connexion en classe, le professeur en sera informé et vous indiquera la procédure à suivre.</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- PAGE CGU -->
+<div class="page" id="page-cgu">
+  <div class="hero" style="padding-bottom:1rem;">
+    <span class="hero-tag">Légal</span>
+    <h1>Conditions Générales d'Utilisation</h1>
+    <p>En utilisant le système Appelle Professeur, vous acceptez les présentes conditions d'utilisation.</p>
+  </div>
+
+  <div class="section">
+    <p class="cgu-date">Dernière mise à jour : mars 2026 &nbsp;·&nbsp; Version 1.0</p>
+
+    <div class="cgu-block">
+      <h3>Article 1 — Objet</h3>
+      <p>Les présentes Conditions Générales d'Utilisation (CGU) régissent l'accès et l'utilisation du système "Appelle Professeur", composé d'un boîtier physique à disposition des élèves et d'une application de réception destinée au professeur. Ce système est un projet scolaire développé dans le cadre d'un lycée, à des fins pédagogiques exclusivement.</p>
+    </div>
+
+    <div class="cgu-block">
+      <h3>Article 2 — Accès et utilisateurs</h3>
+      <p>L'accès au système est réservé :</p>
+      <ul>
+        <li>Aux élèves de la classe équipée, via le boîtier physique attribué à leur place.</li>
+        <li>Au professeur encadrant, via l'application de réception installée sur son appareil.</li>
+      </ul>
+      <p style="margin-top:0.8rem;">Toute utilisation par une personne non autorisée est strictement interdite.</p>
+    </div>
+
+    <div class="cgu-block">
+      <h3>Article 3 — Usages autorisés</h3>
+      <p>Le système peut être utilisé uniquement dans les cas suivants :</p>
+      <ul>
+        <li><strong>Appel d'aide</strong> : signaler au professeur un besoin d'assistance pendant un travail en classe (question simple, blocage ou urgence).</li>
+        <li><strong>Réponse à un QCM</strong> : indiquer sa réponse (A, B ou C) lors d'un questionnaire organisé par le professeur.</li>
+      </ul>
+    </div>
+
+    <div class="cgu-block">
+      <h3>Article 4 — Usages interdits</h3>
+      <p>Il est strictement interdit de :</p>
+      <ul>
+        <li>Utiliser le boîtier d'un autre élève.</li>
+        <li>Envoyer des signaux répétés sans motif réel (spam, abus).</li>
+        <li>Tenter de modifier, démonter ou endommager le boîtier.</li>
+        <li>Utiliser le système à des fins de perturbation du cours ou de nuisance.</li>
+        <li>Contourner intentionnellement les mécanismes de priorité du système.</li>
+      </ul>
+    </div>
+
+    <div class="cgu-block">
+      <h3>Article 5 — Données personnelles</h3>
+      <p>Le système enregistre les données suivantes lors de son utilisation :</p>
+      <ul>
+        <li>L'identifiant de la place (associé à l'élève concerné).</li>
+        <li>La couleur du signal envoyé et l'horodatage de l'envoi.</li>
+        <li>Les réponses aux QCM, associées à l'identifiant de l'élève.</li>
+      </ul>
+      <p style="margin-top:0.8rem;">Ces données sont utilisées uniquement à des fins pédagogiques par le professeur. Elles ne sont pas transmises à des tiers ni conservées au-delà de la fin de l'année scolaire.</p>
+    </div>
+
+    <div class="cgu-block">
+      <h3>Article 6 — Responsabilités</h3>
+      <p>L'équipe projet s'engage à maintenir le bon fonctionnement du système dans les limites de ses capacités techniques. En cas de dysfonctionnement, l'élève doit en informer le professeur. La responsabilité de l'équipe projet ne saurait être engagée en cas de panne réseau, de défaillance matérielle imprévisible ou d'une mauvaise utilisation par l'utilisateur.</p>
+    </div>
+
+    <div class="cgu-block">
+      <h3>Article 7 — Sanctions</h3>
+      <p>Tout usage abusif ou non conforme aux présentes CGU pourra entraîner :</p>
+      <ul>
+        <li>La suspension temporaire ou définitive de l'accès au boîtier.</li>
+        <li>Un signalement au responsable pédagogique de l'établissement.</li>
+        <li>Des sanctions disciplinaires selon le règlement intérieur de l'établissement.</li>
+      </ul>
+    </div>
+
+    <div class="cgu-block">
+      <h3>Article 8 — Modification des CGU</h3>
+      <p>Les présentes conditions peuvent être modifiées à tout moment par l'équipe projet, notamment pour s'adapter à l'évolution du système. Les utilisateurs seront informés de toute modification significative via le professeur encadrant.</p>
+    </div>
+
+    <div class="cgu-block">
+      <h3>Article 9 — Acceptation</h3>
+      <p>L'utilisation du boîtier ou de l'application vaut acceptation sans réserve des présentes Conditions Générales d'Utilisation. En cas de désaccord, l'élève est invité à en informer le professeur avant toute utilisation.</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <strong style="font-family:'DM Serif Display',serif;">Appelle Professeur</strong> &nbsp;·&nbsp; Projet BTS / Terminale &nbsp;·&nbsp; © 2026
+</footer>
+
+<script>
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    document.getElementById('nav-' + id).classList.add('active');
+    window.scrollTo(0, 0);
+  }
+
+  function toggleFaq(btn) {
+    const item = btn.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+</script>
+
 </body>
 </html>
